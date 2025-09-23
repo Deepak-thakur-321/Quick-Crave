@@ -12,11 +12,18 @@ const FoodPartnerRegister = () => {
       e.preventDefault();
 
       const businessName = e.target.businessName.value;
+      console.log(businessName);
       const contactName = e.target.contactName.value;
+      console.log(contactName);
+
       const phone = e.target.phone.value;
+      console.log(phone);
       const email = e.target.email.value;
+      console.log(email);
       const password = e.target.password.value;
+      console.log(password);
       const address = e.target.address.value;
+      console.log(address);
 
       axios.post("http://localhost:4000/api/auth/food-partner/register", {
          name: businessName,

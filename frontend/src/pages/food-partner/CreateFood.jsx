@@ -51,22 +51,34 @@ const CreateFood = () => {
       e.preventDefault();
 
       const formData = new FormData();
-
       formData.append('name', name);
       formData.append('description', description);
-      formData.append("video", videoFile);
+      formData.append('video', videoFile);
 
-      const response = await axios.post("http://localhost:4000/api/food", formData, {
-         withCredentials: true,
-         headers: {
-            "Content-Type": "multipart/form-data",
-         },
-      });
-      console.log(response.data);
-      navigate("/"); // Redirect to home or another page after successful creation
-      // Optionally reset
-      // setName(''); setDescription(''); setVideoFile(null);
+      try {
+         const response = await axios.post(
+            "http://localhost:4000/api/food",
+            formData,
+            {
+               withCredentials: true,
+               headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+               },
+            }
+         );
+
+         console.log(response.data);
+
+         // Option 1: force reload Home page
+         navigate("/"); // triggers useEffect in Home.jsx
+
+         // Option 2: optional state update if passing state
+         // navigate("/", { state: { newFood: response.data.food } });
+      } catch (error) {
+         console.error("Error creating food:", error);
+      }
    };
+
 
    const isDisabled = useMemo(() => !name.trim() || !videoFile, [name, videoFile]);
 

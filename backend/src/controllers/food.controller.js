@@ -4,7 +4,6 @@ const { v4: uuid } = require("uuid");
 
 async function createFood(req, res) {
    try {
-      console.log(req.foodPartner);
       console.log(req.body);
       console.log(req.file);
 
@@ -36,8 +35,8 @@ async function createFood(req, res) {
 
 async function getFoodItems(req, res) {
    try {
-      const foodItems = await foodModel.find({ foodPartner: req.foodPartner._id });
-      res.status(200).json({ message: "Successfully fetched food items", foodItems });
+      const foodItems = await foodModel.find().sort({ createdAt: -1 }); // newest first
+      res.status(200).json({ message: "Fetched food items", foodItems });
    } catch (error) {
       console.error("Error fetching food items:", error);
       res.status(500).json({ message: "Server error", error: error.message });

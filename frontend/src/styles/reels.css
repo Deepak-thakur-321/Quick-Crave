@@ -1,57 +1,73 @@
-@import './theme.css';
-
-/* Page container ensures full viewport and background */
+/* Page container */
 .reels-page {
    height: 100dvh;
    background: var(--color-bg);
+   display: flex;
+   justify-content: center;
+   align-items: center;
    overflow: hidden;
-   /* parent hides overscroll glow on iOS */
 }
 
-/* Vertical feed with snap scrolling */
 .reels-feed {
-   height: 100%;
    width: 100%;
+   max-width: 450px;
+   height: 100%;
    overflow-y: auto;
    scroll-snap-type: y mandatory;
-   overscroll-behavior-y: contain;
-   -webkit-overflow-scrolling: touch;
    scroll-behavior: smooth;
 }
 
-/* Each reel takes full viewport */
+
+/* Each reel takes full viewport but video is centered with mobile aspect ratio */
 .reel {
    position: relative;
    height: 100dvh;
    width: 100%;
    scroll-snap-align: start;
+   display: flex;
+   justify-content: center;
+   align-items: center;
    background: #000;
-   /* fallback while video loads */
 }
 
+/* Reel video wrapper for fixed mobile aspect ratio*/
+.reel-video-wrapper {
+   position: relative;
+   width: 100%;
+   max-width: 450px;
+   aspect-ratio: 9 / 16;
+   border-radius: 12px;
+   overflow: hidden;
+   margin: 0 auto;
+   background: #000;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+/* Ensure video fills wrapper */
 .reel-video {
    position: absolute;
    inset: 0;
    width: 100%;
    height: 100%;
    object-fit: cover;
-   /* cover entire screen */
    object-position: center;
-   background: #000;
 }
 
-/* Overlay: content sits on top of video */
+/* Overlay content stays on top */
 .reel-overlay {
    position: absolute;
    inset: 0;
    display: flex;
-   align-items: flex-end;
-   /* content near bottom */
+   flex-direction: column;
+   justify-content: flex-end;
+   z-index: 2;
    pointer-events: none;
-   /* allow click-through except controls */
 }
 
-/* Subtle top-to-bottom gradient so text is readable on any video */
+
+/* Gradient for overlay */
 .reel-overlay-gradient {
    position: absolute;
    inset: 0;
@@ -62,34 +78,34 @@
          rgba(0, 0, 0, 0.65) 100%);
 }
 
+/* Reel text/content overlay on video */
 .reel-content {
-   position: relative;
-   width: 100%;
-   padding: var(--space-6);
-   padding-bottom: calc(env(safe-area-inset-bottom, 0) + 72px);
-   /* make space for bottom nav */
+   position: absolute;
+   bottom: 16px;
+   left: 16px;
+   right: 80px;
    display: flex;
    flex-direction: column;
-   padding-right: 4.5rem;
-   gap: var(--space-4);
+   gap: 6px;
    pointer-events: auto;
-   /* enable button click */
+   z-index: 3;
 }
 
-/* Truncated to two lines */
+
+/* Reel description */
 .reel-description {
    color: #fff;
-   text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
    font-size: 1rem;
    line-height: 1.3;
    display: -webkit-box;
-   line-clamp: 2;
-   -webkit-line-clamp: 2;
    -webkit-box-orient: vertical;
+   -webkit-line-clamp: 2;
    overflow: hidden;
    max-width: 90ch;
 }
 
+/* Call To Action button */
 .reel-btn {
    align-self: flex-start;
    background: var(--color-accent);
@@ -97,49 +113,45 @@
    border-radius: 999px;
    padding: 10px 16px;
    font-weight: 700;
-   letter-spacing: .3px;
+   letter-spacing: 0.3px;
    text-decoration: none;
    box-shadow: var(--shadow-md);
-   transition: transform var(--transition-base), background var(--transition-base), box-shadow var(--transition-base);
+   transition: transform var(--transition-base),
+      background var(--transition-base),
+      box-shadow var(--transition-base);
 }
 
+/* On hover */
 .reel-btn:hover {
    background: var(--color-accent-hover);
 }
 
+/* Active */
 .reel-btn:active {
    transform: translateY(1px);
 }
 
+/* Focus visible */
 .reel-btn:focus-visible {
    outline: 2px solid #fff;
    outline-offset: 3px;
 }
 
-/* Desktop tweaks */
-@media (min-width: 768px) {
-   .reel-content {
-      padding: 36px;
-   }
-
-   .reel-description {
-      font-size: 1.05rem;
-      max-width: 70ch;
-   }
-}
-
-/* Right-side vertical actions (like, bookmark, comments) */
+/* Right side vertical action buttons */
 .reel-actions {
    position: absolute;
-   right: 10px;
-   bottom: 96px;
-   /* above bottom CTA and nav */
+   bottom: 30px;
+   right: 16px;
    display: flex;
    flex-direction: column;
    gap: 14px;
    pointer-events: auto;
+   z-index: 3;
 }
 
+
+
+/* Individual action buttons */
 .reel-action {
    width: 48px;
    height: 48px;
@@ -149,20 +161,23 @@
    background: color-mix(in srgb, #000 35%, transparent);
    backdrop-filter: blur(2px);
    color: #fff;
-   border: 1px solid rgba(255, 255, 255, .15);
+   border: 1px solid rgba(255, 255, 255, 0.15);
    box-shadow: var(--shadow-md);
 }
 
+/* Button press effect */
 .reel-action:active {
    transform: translateY(1px);
 }
 
+/* Count below icon */
 .reel-action__count {
    color: #fff;
    text-align: center;
    font-size: 12px;
 }
 
+/* Group styling */
 .reel-action-group {
    display: flex;
    flex-direction: column;
@@ -171,10 +186,42 @@
    color: #fff;
 }
 
-.empty-state {
-   position: absolute;
-   inset: 0;
-   display: grid;
-   place-items: center;
-   color: #fff;
+/* Responsive overrides */
+
+/* Tablet */
+@media (min-width: 480px) and (max-width: 767px) {
+   .reel-video-wrapper {
+      max-width: 400px;
+   }
+
+   .reel-content {
+      bottom: 20px;
+      left: 20px;
+      right: 80px;
+      gap: 8px;
+   }
+
+   .reel-description {
+      font-size: 1rem;
+      -webkit-line-clamp: 2;
+   }
+
+   .reel-actions {
+      bottom: 16px;
+      right: 16px;
+      gap: 16px;
+   }
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+   .reel-video-wrapper {
+      max-width: 450px;
+   }
+}
+
+@media (min-width: 1200px) {
+   .reel-video-wrapper {
+      max-width: 450px;
+   }
 }

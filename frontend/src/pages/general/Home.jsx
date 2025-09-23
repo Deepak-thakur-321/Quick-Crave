@@ -8,12 +8,7 @@ const Home = () => {
    // Autoplay behavior is handled inside ReelFeed
 
    useEffect(() => {
-      axios.get("http://localhost:4000/api/food", {
-         withCredentials: true,
-         headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-         },
-      })
+      axios.get("http://localhost:4000/api/food", { withCredentials: true })
          .then(response => {
             console.log(response.data);
             setVideos(response.data.foodItems);
@@ -22,6 +17,7 @@ const Home = () => {
             console.error(err);
          });
    }, []);
+
 
 
    // Using local refs within ReelFeed; keeping map here for dependency parity if needed
@@ -51,12 +47,18 @@ const Home = () => {
    }
 
    return (
-      <ReelFeed
-         items={videos}
-         onLike={likeVideo}
-         onSave={saveVideo}
-         emptyMessage="No videos available."
-      />
+      <div>
+         <ReelFeed
+            items={videos}
+            onLike={likeVideo}
+            onSave={saveVideo}
+            emptyMessage="No videos available."
+         />
+
+            
+      </div>
+
+
    )
 }
 
