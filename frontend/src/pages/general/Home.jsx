@@ -8,15 +8,19 @@ const Home = () => {
    // Autoplay behavior is handled inside ReelFeed
 
    useEffect(() => {
-      axios.get("http://localhost:4000/api/food", { withCredentials: true })
+      axios.get("http://localhost:4000/api/food", {
+         withCredentials: true
+      })
          .then(response => {
             console.log(response.data);
             setVideos(response.data.foodItems);
          })
          .catch(err => {
-            console.error(err);
+            console.error("API Error:", err.response?.data || err.message);
          });
    }, []);
+
+
 
 
 
@@ -55,7 +59,7 @@ const Home = () => {
             emptyMessage="No videos available."
          />
 
-            
+
       </div>
 
 

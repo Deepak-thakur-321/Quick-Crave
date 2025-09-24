@@ -1,21 +1,42 @@
-/* CSS theme variables for social media app */
+/* 🌐 Twitter-Inspired Modern Theme */
 :root {
-   --color-bg: #f9fafb;
+   /* Backgrounds */
+   --color-bg: #e6ecf0;
+   /* light gray page background */
    --color-surface: #ffffff;
-   --color-surface-alt: #f1f5f9;
-   --color-border: #e2e8f0;
-   --color-text: #0f172a;
-   --color-text-secondary: #475569;
-   --color-accent: #2563eb;
-   --color-accent-hover: #1d4ed8;
-   --color-danger: #dc2626;
+   /* white cards */
+   --color-surface-alt: #f5f8fa;
+   /* subtle alternate surface */
+   --color-border: #d1d9e0;
+   /* light border */
 
-   --radius-xs: 2px;
-   --radius-sm: 4px;
-   --radius-md: 8px;
+   /* Text Colors */
+   --color-text: #14171a;
+   /* primary text */
+   --color-text-secondary: #657786;
+   /* muted secondary text */
 
-   --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+   /* Accents */
+   --color-accent: #1da1f2;
+   /* Twitter blue */
+   --color-accent-hover: #0d95e8;
+   /* slightly darker blue */
+   --color-danger: #e0245e;
+   /* alert/red */
 
+   /* Border Radius */
+   --radius-sm: 6px;
+   --radius-md: 10px;
+   --radius-full: 999px;
+
+   /* Shadows */
+   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+   /* Fonts */
+   --font-stack: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+
+   /* Spacing */
    --space-1: 4px;
    --space-2: 8px;
    --space-3: 12px;
@@ -24,60 +45,57 @@
    --space-6: 24px;
    --space-8: 32px;
 
-   --shadow-sm: 0 1px 2px rgba(0, 0, 0, .06);
-   --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, .08), 0 2px 4px -2px rgba(0, 0, 0, .06);
-
-   --transition-base: 120ms cubic-bezier(.4, 0, .2, 1);
+   /* Transitions */
+   --transition-base: 200ms cubic-bezier(.4, 0, .2, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-   :root {
-      --color-bg: #0f172a;
-      --color-surface: #1e293b;
-      --color-surface-alt: #24324a;
-      --color-border: #334155;
-      --color-text: #f1f5f9;
-      --color-text-secondary: #94a3b8;
-      --color-accent: #3b82f6;
-      --color-accent-hover: #60a5fa;
-      --color-danger: #f87171;
-
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, .5);
-      --shadow-md: 0 4px 18px -4px rgba(0, 0, 0, .5), 0 2px 6px -2px rgba(0, 0, 0, .4);
-   }
-}
-
-/* Base styles */
+/* Base Styles */
 body {
    font-family: var(--font-stack);
    background: var(--color-bg);
    color: var(--color-text);
-   -webkit-font-smoothing: antialiased;
-   line-height: 1.4;
    margin: 0;
    padding: 0;
+   line-height: 1.5;
+   -webkit-font-smoothing: antialiased;
+   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Anchor links */
+/* Links */
 a {
    color: var(--color-accent);
    text-decoration: none;
-   transition: color var(--transition-base);
+   transition: opacity var(--transition-base);
 }
 
-a:hover,
-a:focus-visible {
-   color: var(--color-accent-hover);
+a:hover {
+   opacity: 0.85;
 }
 
-::selection {
-   background: var(--color-accent);
+/* Buttons */
+.btn {
+   background-color: var(--color-accent);
    color: #fff;
+   border: none;
+   border-radius: var(--radius-full);
+   padding: var(--space-2) var(--space-5);
+   cursor: pointer;
+   font-weight: 600;
+   transition: transform var(--transition-base), box-shadow var(--transition-base);
+   box-shadow: var(--shadow-md);
 }
 
-/* Social media app specific elements (examples) */
+.btn:hover {
+   transform: translateY(-1px);
+   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
 
-/* Post container */
+.btn:active {
+   transform: translateY(1px);
+   box-shadow: none;
+}
+
+/* Post/Card */
 .post {
    background: var(--color-surface);
    border: 1px solid var(--color-border);
@@ -85,40 +103,25 @@ a:focus-visible {
    box-shadow: var(--shadow-sm);
    padding: var(--space-4);
    margin-bottom: var(--space-4);
-   transition: background-color var(--transition-base), box-shadow var(--transition-base);
+   transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
-@media (prefers-color-scheme: dark) {
-   .post {
-      box-shadow: var(--shadow-md);
-   }
+.post:hover {
+   transform: translateY(-2px);
+   box-shadow: var(--shadow-md);
 }
 
-/* User avatar */
+/* Avatar */
 .avatar {
    width: 48px;
    height: 48px;
    border-radius: 50%;
-   border: 2px solid var(--color-accent);
-}
-
-/* Button */
-.btn {
-   background-color: var(--color-accent);
-   color: var(--color-surface);
-   border: none;
-   border-radius: var(--radius-sm);
-   padding: var(--space-2) var(--space-4);
-   cursor: pointer;
-   transition: background-color var(--transition-base);
-}
-
-.btn:hover {
-   background-color: var(--color-accent-hover);
+   border: 2px solid var(--color-surface-alt);
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 /* Secondary text */
 .text-secondary {
    color: var(--color-text-secondary);
-   font-size: 0.9rem;
+   font-size: 0.92rem;
 }

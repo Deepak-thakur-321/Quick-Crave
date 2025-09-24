@@ -56,13 +56,14 @@ const CreateFood = () => {
       formData.append('video', videoFile);
 
       try {
+         console.log("Token from localStorage:", localStorage.getItem( "token"));
          const response = await axios.post(
             "http://localhost:4000/api/food",
             formData,
             {
                withCredentials: true,
                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                  Authorization: `Bearer ${localStorage.getItem("auth_token", "token")}`,
                },
             }
          );
@@ -75,7 +76,7 @@ const CreateFood = () => {
          // Option 2: optional state update if passing state
          // navigate("/", { state: { newFood: response.data.food } });
       } catch (error) {
-         console.error("Error creating food:", error);
+         console.error("Error creating food:", error.response?.data || error.message);
       }
    };
 
